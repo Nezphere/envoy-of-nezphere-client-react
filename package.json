@@ -3,18 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "cross-fetch": "^2.2.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "cross-env PORT=8081 react-scripts start",
+    "build": "npm run atomize && react-scripts build",
+    "atomize": "atomizer -c .atomizer.js -o ./src/atomic.css -R ./src/components",
+    "atomizer": "nodemon --ext jsx --exec npm run atomize"
   },
   "devDependencies": {
+    "atomizer": "^3.4.7",
+    "cross-env": "^5.2.0",
     "eslint": "^5.0.1",
-    "eslint-plugin-react": "^7.10.0"
+    "eslint-plugin-react": "^7.10.0",
+    "nodemon": "^1.17.5"
   }
 }
