@@ -10,10 +10,10 @@ module.exports = {
         'lgUp': '@media(min-width:992px)',
         'xlUp': '@media(min-width:1200px)',
 
-        'xsDown': '@media(max-width:575.98px)',
-        'smDown': '@media(max-width:767.98px)',
-        'mdDown': '@media(max-width:991.98px)',
-        'lgDown': '@media(max-width:1199.98px)',
+        'smDown': '@media(max-width:575.98px)',
+        'mdDown': '@media(max-width:767.98px)',
+        'lgDown': '@media(max-width:991.98px)',
+        'xlDown': '@media(max-width:1199.98px)',
 
         'xsOnly': '@media (max-width: 575.98px)',
         'smOnly': '@media (min-width: 576px) and (max-width: 767.98px)',
@@ -53,6 +53,25 @@ module.exports = {
         '$6':  '1.5rem',
         '$7':  '1.75rem',
         '$8':  '2rem',
+
+        '$sm': '540px',
+        '$md': '720px',
+        '$lg': '960px',
+        '$xl': '1140px',
+
+        '$l2': '200',
+        '$l1': '300',
+        '$n':  '400',
+        '$b1': '500',
+        '$b2': '600',
+        '$b3': '700',
+        '$b4': '800',
+
+        '$25':  '25%', 
+        '$50':  '50%', 
+        '$75':  '75%', 
+        '$80':  '80%', 
+        '$90':  '90%', 
     },
-    'classNames': [ 'D(n)--sm' ],
+    'classNames': [],
 };

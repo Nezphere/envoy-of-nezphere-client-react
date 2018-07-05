@@ -17,11 +17,28 @@ import registerServiceWorker from './registerServiceWorker';
 import './bootstrap-reboot.css';
 import './atomic.css';
 
+const persistedStateKey = 'reduxState';
+var persistedState = {};
+try {
+	const serializedState = localStorage.getItem(persistedStateKey);
+	if (serializedState) persistedState = JSON.parse(serializedState);
+} catch (e) {
+	// ignore
+}
+
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-	rootReducer,
+	rootReducer, persistedState,
 	composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+store.subscribe(() => {
+	try {
+		localStorage.setItem(persistedStateKey, JSON.stringify(store.getState()));
+	} catch (e) {
+		// ignore
+	}
+});
 
 ReactDOM.render(<BrowserRouter>
 	<Provider store={store}>

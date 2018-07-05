@@ -17,7 +17,7 @@
     "start": "cross-env PORT=8081 react-scripts start",
     "build": "npm run atomize && react-scripts build",
     "atomize": "atomizer -c .atomizer.js -o ./src/atomic.css -R ./src/components",
-    "atomizer": "nodemon --ext jsx --exec npm run atomize"
+    "atomizer": "nodemon --delay 1 --ext jsx --exec npm run atomize"
   },
   "devDependencies": {
     "atomizer": "^3.4.7",

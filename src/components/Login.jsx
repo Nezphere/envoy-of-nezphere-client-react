@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loginAsync, registerAsync } from '../actions';
+import { Link } from 'react-router-dom';
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -32,11 +33,14 @@ class Login extends React.Component {
 	}
 
 	render() {
-		return <div className="Ta(end) Bgc($gray8) C(white) Pos(st) T(0) W($100)">
+		return <div className="Ta(end) Bgc($gray8) C(white) Pos(st) T(0)">
+			<Link to="/" className="Fl(start) Mx($2)">home</Link>
+			<Link to="/bbs" className="Fl(start)">bbs</Link>
+
 			{ this.props.isLoading ? 
-				<span className="Mend($2) Lh($6)">Loading...</span> : 
+				<span className="Mend($2)">Loading...</span> : 
 				this.props.isAuthed ? 
-					<span className="Mend($2) Lh($6)">Welcome back, {this.props.name}.</span> : 
+					<span className="Mend($2)">Welcome, {this.props.name}.</span> : 
 					<form onSubmit={this.onLogin}>
 						<span className="C($red)">{this.props.status}</span>
 						<label className="Mstart($2)">Name:</label>
@@ -45,7 +49,7 @@ class Login extends React.Component {
 						<label className="Mstart($2)">Pass: </label>
 						<input className="Mstart($2)" name="pass" type="password" value={this.state.pass} onChange={this.onInputChange}/>
 						<br className="D(n)--md"/>
-						<button className="Mstart($2) Pos(r) End(-1px)" type="submit">Login</button>
+						<button className="Mstart($2)" type="submit">Login</button>
 						<button type="button" onClick={this.onRegister}>Register</button>
 					</form> }
 		</div>;
