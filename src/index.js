@@ -14,7 +14,7 @@ import rootReducer from './reducers';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
-import './bootstrap-reboot.css';
+import './reboot.css';
 import './atomic.css';
 
 const persistedStateKey = 'reduxState';

@@ -39,6 +39,8 @@ module.exports = {
             "error",
             "always-multiline"
         ],
-        "react/prop-types": [ "warn" ],
+        "react/prop-types": "off",
+        "jsx-a11y/alt-text": "off",
+        "react/display-name": "off",
     }
 };
