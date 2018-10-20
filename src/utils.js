@@ -14,3 +14,13 @@ const process = (processor, str) => String.fromCharCode(...Array.prototype.map.c
 
 export const toFullWidth = process.bind(null, toFullWidthChar);
 export const toHalfWidth = process.bind(null, toHalfWidthChar);
+
+export function onInputChange (e) {
+	const target = e.target;
+	const value = target.type === 'checkbox' ? target.checked : target.value;
+	const name = target.name;
+
+	this.setState({
+		[name]: value,
+	});
+}

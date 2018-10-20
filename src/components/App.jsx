@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from './Login';
-import Bbs from './Bbs';
+import Board from './Bbs';
 import { Route } from 'react-router-dom';
 
 function Index() {
@@ -19,7 +19,7 @@ class App extends React.Component {
 			<Login/>
 			
 			<Route path="/" component={Index} exact/>
-			<Route path="/bbs" component={Bbs}/>
+			<Route path="/bbs" component={Board}/>
 		</div>;
 	}
 }

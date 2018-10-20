@@ -1,5 +1,6 @@
 import React from 'react';
-import { toHalfWidth } from '../utils';
+import { toHalfWidth, onInputChange } from '../utils';
+import { fromEndpoint, fromStatic } from '../actions';
 
 function OpenClose({ className, plus }) {
 	return <span className={'Cur(p) ' + className}>[{plus ? '+' : '-'}]</span>;
@@ -105,26 +106,122 @@ const bbsMock = {
 	},
 };
 
-function PostLevel1() {
-	
+function PostReply() {
+	return <div className="Bgc($gray2) BdT Bdtc($gray3) Ov(a) Cl(b)--lgDown Px($2)">
+		<span className="C($green) Fw($b1)">无名氏</span>: <QuoteLoc className="C($red)" loc="1"/> I dont bully alpha posters until they claim that 9a was the only reason to watch this show.
+		<span className="Fl(end) C($gray6) Fz($90)">
+			<span className="Mend($2)">@1</span>
+			<span className="Mend($2)">2013-07-15 11:50</span>
+			<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
+		</span>
+	</div>;
 }
 
-export default class Bbs extends React.Component {
+function Post() {
+	return <div className="Bgc($gray1) BdT Bdtc($gray2) Ov(a) Cl(b)--mdDown">
+		<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(125px) Mah(125px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
+		<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
+			<span className="C($green) Fw($b1)">无名氏</span><span className="C($red) Fl(end)">@1</span>
+		</div>
+		<div className="Mx($2)"><QuoteLoc className="C($red)" loc="1"/> <QuoteLoc className="C($red)" loc="1"/> 反响：起初比较冷，回复惨淡。连载到最后5章时读者开始多了一些，<br/><QuoteText className="C($green)" text="dsf"/>尤其是结局时催得比较厉害，另有热心读者伪更番外，十分感动。</div>
+		<div className="Cl(b)--lgDown">
+			<div className="Mx($2) Fz($90) C($gray6)">
+				<OpenClose className="C($blue) C($cyan):h Va(tb)" plus/> 468 replies collapsed
+				<span className="Fl(end)">
+					<span className="Mend($2)">@1</span>
+					<span className="Mend($2)">2013-07-15 11:50</span>
+					<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
+				</span>									
+			</div>
+			<div>
+				<PostReply/>
+				<div className="Bgc($gray2) BdT Bdtc($gray3) Ov(a) Cl(b)--lgDown">
+					<Markdown markdown={''} className="Mx($2) Wow(bw) Whs(pl)"><span className="Fl(start) Pend($1)"><span className="C($green) Fw($b1)">无名氏</span>:</span></Markdown>
+					<textarea name="md" className="W(100%) D(b) Ff(m)" onInput={null}/>
+					<span className="Fl(end) C($gray6)">
+						<span className="Mend($2) Cur(p) C($cyan):h Va(tb)">[format tips]</span>
+						<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)">[send]</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>;
+}
+
+function Topic() {
+	return <div className="Bgc(white) BdT Bdtc($gray3) Cf">
+		<h3 className= "Mx($2) Mb($1)">
+			<OpenClose className="C($blue) C($cyan):h Va(tb)"/> Boku no Hero Academia
+		</h3>
+		<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(250px) Mah(250px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
+		<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
+			<span className="C($green) Fw($b1)">无名氏</span><span className="C($red) Fl(end)">@1</span>
+		</div>
+		<div className="Mx($2)">I love <strong>moe-girl</strong><br/>Going to dump a chapter from <em>Ai-chan</em> comic anthology</div>
+		<div className="Cl(b)--mdDown">
+			<div className="Mx($2) Fz($90) C($gray6)">
+				<OpenClose className="C($blue) C($cyan):h Va(tb)" plus/> 468 replies collapsed
+				<span className="Fl(end)">
+					<span className="Mend($2)">@1</span>
+					<span className="Mend($2)">2013-07-15 11:50</span>
+					<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
+				</span>
+			</div>
+			<div>
+				<Post/>
+				<div className="Bgc($gray1) BdT Bdtc($gray2) Ov(a) Cl(b)--mdDown">
+					<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(125px) Mah(125px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
+					<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
+						<span className="C($green) Fw($b1)">无名氏</span>
+					</div>
+					<Markdown markdown={''} className="Mx($2) Wow(bw) Whs(pl)"/>
+					<textarea name="md" className="W(100%) D(b) Ff(m)" onInput={null}/>
+					<input type="file" accept="image/*" className="Maw(100%)"/>
+					<span className="Mstart($2) Cur(p) C($red) C($orange):h Va(tb)">[remove pic]</span>
+					<span className="Fl(end) C($gray6)">
+						<span className="Mend($2) Cur(p) C($cyan):h Va(tb)">[format tips]</span>
+						<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)">[send]</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>;
+}
+
+export default class Board extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			md: '',
+			isReplying: false,
+			isImageUploading: false,
+			replyTitle: '',
+			replyMarkdown: '',
+			replyImage: '',
 		};
 
-		this.onInputChange = e => {
-			const target = e.target;
-			const value = target.type === 'checkbox' ? target.checked : target.value;
-			const name = target.name;
+		this.replyImageInputRef = React.createRef();
+
+		this.onInputChange = onInputChange.bind(this);
+		this.onReplyImageChange = e => {
+			this.setState({ isImageUploading: true });
+			const form = new FormData();
+			form.append('image', e.target.files[0]);
 		
-			this.setState({
-				[name]: value,
+			fetch(fromEndpoint('/v1/images/upload'), {
+				method: 'POST',
+				body: form,
+			}).then(res => res.json()).then(res => {
+				if (res.err) throw res.err;
+				this.setState({ isImageUploading: false, replyImage: fromStatic(res.path) });
+			}).catch(() => {
+				this.setState({ isImageUploading: false });
+				this.onReplyRemovePic();
 			});
+		};
+		this.onReplyRemovePic = () => {
+			this.setState({ replyImage: '' });
+			this.replyImageInputRef.current.value = null;
 		};
 	}
 
@@ -133,93 +230,22 @@ export default class Bbs extends React.Component {
 			<h2>BBS</h2>
 			
 			<div>
+				<Topic/>
 				<div className="Bgc(white) BdT Bdtc($gray3) Cf">
-					<h3 className= "Mx($2) Mb($1)">
-						<OpenClose className="C($blue) C($cyan):h Va(tb)"/> Boku no Hero Academia
-					</h3>
-					<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(250px) Mah(250px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
-					<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
-						<span className="C($green) Fw($b1)">无名氏</span><span className="C($red) Fl(end)">@1</span>
-					</div>
-					<div className="Mx($2)">I love <strong>moe-girl</strong><br/>Going to dump a chapter from <em>Ai-chan</em> comic anthology</div>
-					<div className="Cl(b)--mdDown">
-						<div className="Mx($2) Fz($90) C($gray6)">
-							<OpenClose className="C($blue) C($cyan):h Va(tb)" plus/> 468 replies collapsed
-							<span className="Fl(end)">
-								<span className="Mend($2)">@1</span>
-								<span className="Mend($2)">2013-07-15 11:50</span>
-								<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
-							</span>
-						</div>
-						<div>
-							<div className="Bgc($gray1) BdT Bdtc($gray2) Ov(a) Cl(b)--mdDown">
-								<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(125px) Mah(125px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
-								<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
-									<span className="C($green) Fw($b1)">无名氏</span><span className="C($red) Fl(end)">@1</span>
-								</div>
-								<div className="Mx($2)"><QuoteLoc className="C($red)" loc="1"/> <QuoteLoc className="C($red)" loc="1"/> 反响：起初比较冷，回复惨淡。连载到最后5章时读者开始多了一些，<br/><QuoteText className="C($green)" text="dsf"/>尤其是结局时催得比较厉害，另有热心读者伪更番外，十分感动。</div>
-								<div className="Cl(b)--lgDown">
-									<div className="Mx($2) Fz($90) C($gray6)">
-										<OpenClose className="C($blue) C($cyan):h Va(tb)" plus/> 468 replies collapsed
-										<span className="Fl(end)">
-											<span className="Mend($2)">@1</span>
-											<span className="Mend($2)">2013-07-15 11:50</span>
-											<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
-										</span>									
-									</div>
-									<div>
-										<div className="Bgc($gray2) BdT Bdtc($gray3) Ov(a) Cl(b)--lgDown Px($2)">
-											<span className="C($green) Fw($b1)">无名氏</span>: <QuoteLoc className="C($red)" loc="1"/> I dont bully alpha posters until they claim that 9a was the only reason to watch this show.
-											<span className="Fl(end) C($gray6) Fz($90)">
-												<span className="Mend($2)">@1</span>
-												<span className="Mend($2)">2013-07-15 11:50</span>
-												<span className="Cur(p) C($blue) C($cyan):h Va(tb)">[reply]</span>
-											</span>
-										</div>
-										<div className="Bgc($gray2) BdT Bdtc($gray3) Ov(a) Cl(b)--lgDown">
-											<Markdown markdown={this.state.md} className="Mx($2) Wow(bw) Whs(pl)"><span className="Fl(start) Pend($1)"><span className="C($green) Fw($b1)">无名氏</span>:</span></Markdown>
-											<textarea name="md" className="W(100%) D(b) Ff(m)" onInput={this.onInputChange}/>
-											<span className="Fl(end) C($gray6)">
-												<span className="Mend($2) Cur(p) C($cyan):h Va(tb)">[format tips]</span>
-												<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)">[send]</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="Bgc($gray1) BdT Bdtc($gray2) Ov(a) Cl(b)--mdDown">
-								<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(125px) Mah(125px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
-								<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
-									<span className="C($green) Fw($b1)">无名氏</span>
-								</div>
-								<Markdown markdown={this.state.md} className="Mx($2) Wow(bw) Whs(pl)"/>
-								<textarea name="md" className="W(100%) D(b) Ff(m)" onInput={this.onInputChange}/>
-								<input type="file" accept="image/*" className="Maw(100%)"/>
-								<span className="Mstart($2) Cur(p) C($red) C($orange):h Va(tb)">[remove pic]</span>
-								<span className="Fl(end) C($gray6)">
-									<span className="Mend($2) Cur(p) C($cyan):h Va(tb)">[format tips]</span>
-									<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)">[send]</span>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="Bgc(white) BdT Bdtc($gray3) Cf">
-					<h3 className= "Mx($2) Mb($1)">
-						Boku no Hero Academia
-					</h3>
-					<img alt="" src="http://is2.4chan.org/a/1530763110279.jpg" className="Fl(start)--sm Maw(250px) Mah(250px) Mend($2) D(b)--smDown Mx(a)--smDown"/>
+					{ this.state.replyTitle && <h3 className= "Mx($2) Mb($1)">{this.state.replyTitle}</h3> }
+					{ this.state.replyImage && <img alt="" src={this.state.replyImage} className="Fl(start)--sm Maw(250px) Mah(250px) Mend($2) D(b)--smDown Mx(a)--smDown"/> }
 					<div className="Fz($4) Fw($n) Mx($2) Cl(b)--smDown">
 						<span className="C($green) Fw($b1)">无名氏</span>
 					</div>
-					<div className="Mx($2)"><QuoteLoc className="C($red)" loc="1"/> <QuoteLoc className="C($red)" loc="1"/> 反响：起初比较冷，回复惨淡。连载到最后5章时读者开始多了一些，<br/><QuoteText className="C($green)" text="dsf"/>尤其是结局时催得比较厉害，另有热心读者伪更番外，十分感动。</div>
-					<input type="text" className="W(100%)" placeholder="title..."/>
-					<textarea className="W(100%) D(b) Ff(m)"/>
-					<input type="file" accept="image/*" className="Maw(100%)"/>
-					<span className="Mstart($2) Cur(p) C($red) C($orange):h Va(tb)">[remove pic]</span>
+					<Markdown className="Mx($2) Wow(bw) Whs(pl)" markdown={this.state.replyMarkdown}/>
+					<input type="text" className="W(100%)" name="replyTitle" onInput={this.onInputChange} placeholder="title..."/>
+					<textarea className="W(100%) D(b) Ff(m)" name="replyMarkdown" rows={this.state.replyMarkdown.split('\n').length} onInput={this.onInputChange} placeholder="markdown..."/>
+					{ this.state.isImageUploading && <span className="Mstart($2) C($teal)">processing...</span> }
+					<input type="file" accept="image/*" className="Maw(100%)" onChange={this.onReplyImageChange} ref={this.replyImageInputRef} hidden={this.state.isImageUploading}/>
+					<span className="Mstart($2) Cur(p) C($red) C($orange):h Va(tb)" onClick={this.onReplyRemovePic} hidden={this.state.isImageUploading}>[remove pic]</span>
 					<span className="Fl(end) C($gray6)">
 						<span className="Mend($2) Cur(p) C($cyan):h Va(tb)">[format tips]</span>
-						<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)">[send]</span>
+						<span className="Mend($2) Cur(p) C($red) C($orange):h Va(tb)" hidden={this.state.isImageUploading}>[send]</span>
 					</span>
 				</div>
 			</div>

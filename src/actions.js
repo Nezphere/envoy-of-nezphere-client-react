@@ -10,8 +10,12 @@ function postJson(obj) {
 	};
 }
 
-function fromEndpoint(endpoint) {
+export function fromEndpoint(endpoint) {
 	return 'https://api.nezphere.com' + endpoint;
+}
+
+export function fromStatic(path) {
+	return 'https://static.nezphere.com/' + path;
 }
 
 export function loginAsync(name, pass) {
@@ -59,3 +63,10 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 function loginFailed(status) {
 	return { type: LOGIN_FAILED, status };
 }
+
+export const REQUEST_POSTS = 'REQUEST_POSTS';
+function requestPosts() {
+
+}
+
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';

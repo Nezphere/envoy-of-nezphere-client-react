@@ -1,6 +1,14 @@
 import { combineReducers } from 'redux';
+import update from 'immutability-helper';
 
-import { LOGIN_STARTED, LOGIN_SUCCESSFUL, REGISTER_SUCCESSFUL, LOGIN_FAILED } from './actions';
+import {
+	LOGIN_STARTED, 
+	LOGIN_SUCCESSFUL, 
+	REGISTER_SUCCESSFUL, 
+	LOGIN_FAILED,
+
+	REQUEST_POSTS,
+	RECEIVE_POSTS } from './actions';
 
 function friend(state = {
 	isAuthed: false,
@@ -19,4 +27,24 @@ function friend(state = {
 	}
 }
 
-export default combineReducers({ friend });
+// function boards(state = {}, action) {
+// 	switch (action.type) {
+// 	case REQUEST_BOARDS:
+// 		return { ...state, isLoading: true };
+// 	case RECEIVE_BOARDS:
+// 		return { ...state, ...action.boards.reduce((acc, cur) => { acc[cur.id] = cur; return acc; }, {}), isLoading: false };
+// 	}
+// }
+
+function posts(state = {}, action) {
+	switch (action.type) {
+	case REQUEST_POSTS:
+		return { ...state, isLoading: true };
+	case RECEIVE_POSTS:
+		return action.boards.reduce((acc, cur) => { acc[cur.id] = cur; return acc; }, { ...state, isLoading: false });
+	default:
+		return state;
+	}
+}
+
+export default combineReducers({ friend, posts });
